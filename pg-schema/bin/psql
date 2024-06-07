@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+echo "[ bin/psql ] Connecting to pg-schema_development"
+PGPASSWORD=postgres psql -U postgres \
+                         -h db \
+                         -p 5432 \
+                         pg-schema_development
