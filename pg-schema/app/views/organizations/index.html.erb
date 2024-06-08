@@ -1,9 +1,10 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Organizations</h1>
+<h1>🏢 Organizations </h1>
 
 <div id="organizations">
   <% @organizations.each do |organization| %>
+    <hr>
     <%= render organization %>
     <p>
       <%= link_to "Show this organization", organization %>

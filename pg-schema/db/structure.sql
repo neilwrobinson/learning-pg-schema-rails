@@ -9,13 +9,6 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
---
--- Name: test_search_path; Type: SCHEMA; Schema: -; Owner: -
---
-
-CREATE SCHEMA test_search_path;
-
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -27,9 +20,42 @@ SET default_table_access_method = heap;
 CREATE TABLE public.ar_internal_metadata (
     key character varying NOT NULL,
     value character varying,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    created_at timestamp(6) with time zone NOT NULL,
+    updated_at timestamp(6) with time zone NOT NULL
 );
+
+
+--
+-- Name: orders; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders (
+    id bigint NOT NULL,
+    name character varying,
+    address character varying,
+    email character varying,
+    created_at timestamp(6) with time zone NOT NULL,
+    updated_at timestamp(6) with time zone NOT NULL
+);
+
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_id_seq OWNED BY public.orders.id;
 
 
 --
@@ -87,57 +113,10 @@ CREATE TABLE public.schema_migrations (
 
 
 --
--- Name: ar_internal_metadata; Type: TABLE; Schema: test_search_path; Owner: -
+-- Name: orders id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-CREATE TABLE test_search_path.ar_internal_metadata (
-    key character varying NOT NULL,
-    value character varying,
-    created_at timestamp(6) with time zone NOT NULL,
-    updated_at timestamp(6) with time zone NOT NULL
-);
-
-
---
--- Name: orders; Type: TABLE; Schema: test_search_path; Owner: -
---
-
-CREATE TABLE test_search_path.orders (
-    id bigint NOT NULL,
-    name character varying,
-    address text,
-    email character varying,
-    created_at timestamp(6) with time zone NOT NULL,
-    updated_at timestamp(6) with time zone NOT NULL
-);
-
-
---
--- Name: orders_id_seq; Type: SEQUENCE; Schema: test_search_path; Owner: -
---
-
-CREATE SEQUENCE test_search_path.orders_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: orders_id_seq; Type: SEQUENCE OWNED BY; Schema: test_search_path; Owner: -
---
-
-ALTER SEQUENCE test_search_path.orders_id_seq OWNED BY test_search_path.orders.id;
-
-
---
--- Name: schema_migrations; Type: TABLE; Schema: test_search_path; Owner: -
---
-
-CREATE TABLE test_search_path.schema_migrations (
-    version character varying NOT NULL
-);
+ALTER TABLE ONLY public.orders ALTER COLUMN id SET DEFAULT nextval('public.orders_id_seq'::regclass);
 
 
 --
@@ -148,18 +127,19 @@ ALTER TABLE ONLY public.organizations ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- Name: orders id; Type: DEFAULT; Schema: test_search_path; Owner: -
---
-
-ALTER TABLE ONLY test_search_path.orders ALTER COLUMN id SET DEFAULT nextval('test_search_path.orders_id_seq'::regclass);
-
-
---
 -- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (id);
 
 
 --
@@ -179,35 +159,12 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
--- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: test_search_path; Owner: -
---
-
-ALTER TABLE ONLY test_search_path.ar_internal_metadata
-    ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
-
-
---
--- Name: orders orders_pkey; Type: CONSTRAINT; Schema: test_search_path; Owner: -
---
-
-ALTER TABLE ONLY test_search_path.orders
-    ADD CONSTRAINT orders_pkey PRIMARY KEY (id);
-
-
---
--- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: test_search_path; Owner: -
---
-
-ALTER TABLE ONLY test_search_path.schema_migrations
-    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
-
-
---
 -- PostgreSQL database dump complete
 --
 
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20240608162452'),
 ('20240601013540');
 

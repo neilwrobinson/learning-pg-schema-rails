@@ -7,3 +7,40 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+Organization.destroy_all
+
+
+Organization.create!([{
+    id: '1',
+    name: "M3",
+    created_at: Time.now,
+    updated_at: Time.now
+},
+{
+    id: '2',
+    name: "O3",
+    created_at: Time.now,
+    updated_at: Time.now
+}])
+
+Order.destroy_all
+
+Order.create!([{
+    id: '1',
+    name: "Order One",
+    address: "1 Fake Street",
+    email: "example@example.com",
+    created_at: Time.now,
+    updated_at: Time.now
+
+},
+{
+    id: '2',
+    name: "Order Two",
+    address: "2 Fake Street",
+    email: "example2@example.com",
+    created_at: Time.now,
+    updated_at: Time.now 
+}
+])

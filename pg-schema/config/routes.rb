@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :orders
+  get 'orders/index'
+  get 'orders/new'
+  get 'orders/edit'
+  get 'orders/show'
+  get 'orders/create'
+  get 'orders/update'
+  get 'orders/destroy'
   resources :organizations
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
